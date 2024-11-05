@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_05_132505) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_05_231212) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_132505) do
     t.string "sales_order_number"
     t.integer "job_type"
     t.text "job_instructions"
-    t.string "status"
+    t.string "status", default: "Booked"
     t.string "assigned_to"
     t.string "location"
     t.datetime "start_date"

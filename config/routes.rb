@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 	get 'admin/calendar', to: 'page#calendar'
 	get 'admin/dashboard', to: 'page#dashboard'
   get '/dashboard', to: 'main#dashboard'
+  
   if Rails.env.development? || Rails.env.test?
     mount Railsui::Engine, at: "/railsui"
   end
