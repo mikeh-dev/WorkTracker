@@ -19,11 +19,19 @@ colors:
     '50': "#eaf6fc"
     '100': "#c1e3f7"
     '200': "#98d1f2"
-    '300': "#6FBFED"
-    '400': "#46ACE7"
-    '500': "#1D9AE2"
+    '300': "#6fbfed"
+    '400': "#46ace7"
+    '500': "#1d9ae2"
     '600': "#187eb9"
     '700': "#126290"
-    '800': "#0D4667"
+    '800': "#0d4667"
     '900': "#082a3e"
-    '950': "#030E15"
+    '950': "#030e15"
+pages:
+- booking
+- bookings
+- calendar
+- dashboard
+- edit_booking
+- help_center
+- new_booking
