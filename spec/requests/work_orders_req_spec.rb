@@ -38,10 +38,10 @@ RSpec.describe "WorkOrders", type: :request do
     end
 
     describe "POST /create" do
-      let(:valid_attributes) { 
-        { work_order: FactoryBot.attributes_for(:work_order, user: user, production_job_number: "123456", job_type: "Repair") }
+      let(:valid_attributes) {
+        { work_order: FactoryBot.attributes_for(:work_order, user: user) }
       }
-      
+
       it "creates a new work order and redirects to the show page" do
         expect {
           post work_orders_path, params: valid_attributes
@@ -54,13 +54,13 @@ RSpec.describe "WorkOrders", type: :request do
         
         work_order = WorkOrder.last
         expect(work_order.production_job_number).to eq(valid_attributes[:work_order][:production_job_number])
-        expect(work_order.job_type).to eq(valid_attributes[:work_order][:job_type])
+        expect(work_order.job_type.to_sym).to eq(valid_attributes[:work_order][:job_type].to_sym)
         expect(work_order.user).to eq(user)
       end
 
       context "with invalid attributes" do
         let(:invalid_attributes) {
-          { work_order: FactoryBot.attributes_for(:work_order, production_job_number: nil) }
+          { work_order: FactoryBot.attributes_for(:work_order, customer_name: nil) }
         }
 
         it "does not create a work order" do

@@ -13,12 +13,24 @@ class WorkOrdersController < ApplicationController
   end
 
   def create
+    @work_order = WorkOrder.new(work_order_params)
+    @work_order.user = current_user
+    if @work_order.save
+      redirect_to work_order_path(@work_order), notice: "Work order created successfully"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
   end
 
   def update
+    if @work_order.update(work_order_params)
+      redirect_to work_order_path(@work_order), notice: "Work order updated successfully"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -30,5 +42,9 @@ class WorkOrdersController < ApplicationController
 
   def set_work_order
     @work_order = WorkOrder.find(params[:id])
+  end
+
+  def work_order_params
+    params.require(:work_order).permit(:customer_name, :customer_phone_number, :start_date, :end_date, :production_job_number, :sales_order_number, :location, :job_type, :status)
   end
 end

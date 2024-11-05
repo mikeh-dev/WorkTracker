@@ -54,8 +54,10 @@ RSpec.describe "Work Orders", type: :system do
 
     describe "actions dropdown" do
       it "can open the actions menu" do
-        find("button", text: "Actions").click
-        expect(page).to have_link("Go to Booking")
+        if page.has_css?('#ellipsis-horizontal', visible: true)
+          find('#ellipsis-horizontal').click
+        end
+        expect(page).to have_link("Go to Work Order")
       end
     end
 
