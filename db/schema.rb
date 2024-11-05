@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_05_102713) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_05_132505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,33 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_102713) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "work_orders", force: :cascade do |t|
+    t.string "vehicle_registration_number"
+    t.string "vehicle_make"
+    t.string "vehicle_model"
+    t.string "vehicle_mileage"
+    t.text "vehicle_damage_notes"
+    t.string "customer_name"
+    t.string "customer_phone_number"
+    t.string "customer_email"
+    t.string "production_job_number"
+    t.string "sales_order_number"
+    t.integer "job_type"
+    t.text "job_instructions"
+    t.string "status"
+    t.string "assigned_to"
+    t.string "location"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.text "job_notes"
+    t.text "extra_parts_used"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_work_orders_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "work_orders", "users"
 end

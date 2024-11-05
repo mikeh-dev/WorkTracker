@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'work_orders/index'
+  get 'work_orders/new'
+  get 'work_orders/edit'
+  get 'work_orders/show'
 	get 'admin/help_center', to: 'page#help_center'
 	get 'admin/edit_booking', to: 'page#edit_booking'
 	get 'admin/booking', to: 'page#booking'
@@ -12,6 +16,8 @@ Rails.application.routes.draw do
   end
 
   root "main#dashboard"
+
+  resources :work_orders
 
   devise_for :users
   

@@ -9,7 +9,7 @@ RSpec.describe "Checks if a User is logged in before accessing the main dashboar
   end
 
   it "allows a logged in user to access the main dashboard" do
-    login_as(user)
+    sign_in user
     visit main_dashboard_path
     expect(page).to have_current_path(main_dashboard_path)
   end
