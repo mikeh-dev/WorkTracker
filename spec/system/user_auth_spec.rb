@@ -40,7 +40,7 @@ RSpec.describe "User authentication", type: :system do
 
   it "allows a user to log out" do
     login_as(user)
-    visit main_dashboard_path
+    visit root_path
     find('#dropdowns-nav-toggle').click
     click_button "Sign out"
     expect(page).to have_content("You need to sign in or sign up before continuing.")

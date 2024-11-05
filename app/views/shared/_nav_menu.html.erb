@@ -2,10 +2,10 @@
   <div class="md:flex items-center md:space-x-4 md:flex-1">
     <div class="md:flex items-center justify-between w-full md:space-x-3">
       <div class="flex items-center justify-between md:w-auto w-full">
-        <%= link_to (defined?(admin_dashboard_path) ? admin_dashboard_path : "#") do %>
+        <%= link_to root_path do %>
           <h1>
             <%= icon "logo", path: "logo.svg", classes: "text-zinc-900 dark:text-white fill-current w-10 h-10" %>
-            <span class="sr-only">Shepherd</span>
+            <span class="sr-only">ConversionTracker</span>
           </h1>
         <% end %>
 
@@ -24,17 +24,16 @@
         <nav role="primary navigation" class="flex-1">
           <ul class="md:flex items-center md:space-y-0 space-y-4">
             <div class="flex-1 md:flex items-center">
-              <%= render "shared/admin/nav_links" %>
+              <%= render "shared/nav_links" %>
             </div>
 
             <% if user_signed_in? %>
-              <%= render "shared/notifications" %>
               <li>
-                <div data-controller="dropdown" class="md:flex relative">
-                  <button id="dropdowns-nav-toggle" data-action="click->dropdown#toggle click@window->dropdown#hide"
+                <div data-controller="dropdown" class="md:flex relative" id="dropdowns-nav-toggle">
+                  <button data-action="click->dropdown#toggle click@window->dropdown#hide"
                     data-dropdown-target="trigger" class="rounded-full md:w-10 md:h-10 w-12 h-12 border-zinc-300 border flex items-center justify-center focus:border-zinc-400
                     focus:ring-4 focus:ring-zinc-200/80 hover:border-zinc-300/90 dark:border-zinc-600 dark:focus:ring-zinc-700
-                    dark:focus:border-zinc-300/90">
+                    dark:focus:border-zinc-300/90 ">
 
                     <% if current_user.avatar.attached? %>
                       <%= image_tag current_user.avatar, class: "md:w-10 md:h-10 w-12 h-12 rounded-full flex-shrink-0 select-none pointer-events-none" %>
@@ -53,15 +52,11 @@
                     data-transition-leave-to="transform opacity-0 scale-95">
 
                     <li>
-                      <%= link_to "Inbox", (defined?(admin_inbox_path) ? admin_inbox_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
+                      <%= link_to "Manage Work Orders", (defined?(admin_properties_path) ? admin_properties_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
                     </li>
 
                     <li>
-                      <%= link_to "Manage properties", (defined?(admin_properties_path) ? admin_properties_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
-                    </li>
-
-                    <li>
-                      <%= link_to "Add booking", (defined?(admin_new_booking_path) ? admin_new_booking_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
+                      <%= link_to "Add Work Order", (defined?(admin_new_booking_path) ? admin_new_booking_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
                     </li>
 
                     <li class="border-b border-zinc-300/80 dark:border-zinc-700/80 my-1.5"></li>
@@ -70,7 +65,7 @@
                     </li>
 
                     <li>
-                      <%= button_to "Sign out",(defined?(destroy_user_session_path) ? destroy_user_session_path : "#"), method: :delete, id: "sign-out-button", class: "py-1.5 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 font-light md:text-sm text-left block" %>
+                      <%= button_to "Sign out",(defined?(destroy_user_session_path) ? destroy_user_session_path : "#"), method: :delete, class: "py-1.5 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 font-light md:text-sm text-left block" %>
                     </li>
                   </ul>
                 </div>

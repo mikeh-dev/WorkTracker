@@ -30,5 +30,14 @@ RSpec.describe "Work Order", type: :system do
     before do
       sign_in user
     end
+
+    it "allows a User to view all work orders" do
+      visit work_orders_path
+      expect(page).to have_content("Work Orders")
+      expect(page).to have_current_path(work_orders_path)
+      expect(page).to have_content(work_order.id)
+      expect(page).to have_content(work_order.title)
+      expect(page).to have_content(work_order.description)
+    end
   end
 end
