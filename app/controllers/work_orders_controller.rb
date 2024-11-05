@@ -1,7 +1,9 @@
 class WorkOrdersController < ApplicationController
   before_action :set_work_order, except: [:index, :new, :create]
   def index
-    @upcoming_work_orders = WorkOrder.where(start_date: Date.today..Date.today + 30.days)
+    @upcoming_work_orders = WorkOrder.where(start_date: Date.today..Date.today + 30.days, status: "Booked")
+    @completed_work_orders = WorkOrder.where(status: "Completed")
+    @all_work_orders = @upcoming_work_orders + @completed_work_orders
   end
 
   def show
