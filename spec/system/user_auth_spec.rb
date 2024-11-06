@@ -98,7 +98,7 @@ RSpec.describe "User authentication", type: :system do
 
     it "allows a User to view work orders show page" do
       visit work_order_path(work_order)
-      expect(page).to have_content(work_order.name)
+      expect(page).to have_content(work_order.customer_name)
       expect(page).to have_current_path(work_order_path(work_order))
     end
 
