@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.describe "User authentication", type: :system do
   let(:user) { FactoryBot.create(:user) }
-
+  let(:work_order) { FactoryBot.create(:work_order, user: user) }
+  
   context "when not logged in" do
     it "allows a user to sign up" do
       visit new_user_registration_path
@@ -43,7 +44,7 @@ RSpec.describe "User authentication", type: :system do
       visit root_path
       expect(page).to have_content("Sign in")
       click_link "Forgot your password?"
-      expect(page).to have_content("Forgot your password?")
+      expect(page).to have_content("Forget your password?")
       visit new_user_password_path
       fill_in "Email", with: user.email
       click_button "Send me reset password instructions"

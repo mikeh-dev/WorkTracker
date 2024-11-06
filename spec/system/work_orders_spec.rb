@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Work Orders", type: :system do
   let(:user) { create(:user) }
+  let(:work_order) { create(:work_order, user: user) }
   
   before do
     sign_in user
@@ -57,13 +58,13 @@ RSpec.describe "Work Orders", type: :system do
         if page.has_css?('#ellipsis-horizontal', visible: true)
           find('#ellipsis-horizontal').click
         end
-        expect(page).to have_link("Go to Work Order")
+        expect(page).to have_content("Go to Work Order")
       end
     end
 
     describe "pagination" do
       before do
-        create_list(:work_order, 12, user: user) # Create enough orders to trigger pagination
+        create_list(:work_order, 12, user: user)
       end
 
       it "shows pagination controls" do
