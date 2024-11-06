@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 md:py-16 py-6 md:mb-16">
+<div class="container mx-auto px-4 md:py-16 py-6 md:mb-8">
   <div class="md:flex items-center justify-between">
     <h1 class="mb:mb-0 mb-6 text-4xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Work Orders</h1>
     <div class="md:flex items-center md:space-x-6">
@@ -22,147 +22,18 @@
 
     <!-- Upcoming Bookings -->
     <div class="p-4" data-tabs-target="panel" id="upcoming-work-orders">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm min-w-full border-collapse">
-          <%= render "table/table_header", model: WorkOrder %>
-          <tbody class="text-zinc-800 divide-y divide-zinc-200/80 dark:divide-zinc-700">
-
-           <% @upcoming_work_orders.each do |work_order| %>
-              <tr class="md:whitespace-normal whitespace-nowrap">
-                <td class="align-top md:px-0 p-4 md:whitespace-normal whitespace-nowrap">
-                  <% if work_order.status == "Booked" %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-blue-50 text-blue-600 px-2 py-1 tracking-tight dark:bg-blue-500/20 dark:text-blue-200"><%= work_order.status %></span>
-                  <% elsif work_order.status == "Completed" %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-emerald-50 text-emerald-600  px-2 py-1 tracking-tight dark:bg-emerald-500/20 dark:text-emerald-200"><%= work_order.status %></span>
-                  <% else %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-red-50 text-red-600 px-2 py-1 tracking-tight dark:bg-red-500/20 dark:text-red-200"><%= work_order.status %></span>
-                  <% end %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                  <p><%= link_to work_order.customer_name, work_order_path(work_order) %></p>
-                  <p><small class="text-zinc-500 dark:text-zinc-400 font-sans"><%= work_order.job_type.titleize %></small></p>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.start_date.strftime("%b %d, %Y") %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.end_date.strftime("%b %d, %Y") %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.production_job_number %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                  <%= work_order.sales_order_number %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.location %>
-                </td>
-                <td class="align-top pt-2">
-                  <%= render "table/table_button", work_order: work_order %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+      <%= render "work_order_table", work_orders: @upcoming_work_orders %>
     </div>
 
     <!-- Completed Bookings -->
     <div class="hidden p-4" data-tabs-target="panel" id="completed-work-orders">
-       <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm min-w-full border-collapse">
-          <%= render "table/table_header", model: WorkOrder %>
-
-          <tbody class="text-zinc-800 divide-y divide-zinc-200/80 dark:divide-zinc-700">
-
-        <% @completed_work_orders.each do |work_order| %>
-
-              <tr class="md:whitespace-normal whitespace-nowrap">
-                <td class="align-top md:px-0 p-4 md:whitespace-normal whitespace-nowrap">
-                  <% if work_order.status == "Booked" %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-blue-50 text-blue-600 px-2 py-1 tracking-tight dark:bg-blue-500/20 dark:text-blue-200"><%= work_order.status %></span>
-                  <% elsif work_order.status == "Completed" %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-emerald-50 text-emerald-600  px-2 py-1 tracking-tight dark:bg-emerald-500/20 dark:text-emerald-200"><%= work_order.status %></span>
-                  <% else %>
-                    <span class="text-xs font-medium rounded-full font-sans bg-red-50 text-red-600 px-2 py-1 tracking-tight dark:bg-red-500/20 dark:text-red-200"><%= work_order.status %></span>
-                  <% end %>                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                  <p><%= link_to work_order.customer_name, work_order_path(work_order) %></p>
-                  <p><small class="text-zinc-500 dark:text-zinc-400 font-sans"><%= work_order.job_type.titleize %></small></p>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.start_date %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.end_date %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.production_job_number %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                  <%= work_order.sales_order_number %>
-                </td>
-                <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                  <%= work_order.location %>
-                </td>
-                <td class="align-top pt-2">
-                  <%= render "table/table_button", work_order: work_order %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+      <%= render "work_order_table", work_orders: @completed_work_orders %>
     </div>
 
     <!-- All Bookings -->
     <div class="hidden p-4" data-tabs-target="panel">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm min-w-full border-collapse">
-          <%= render "table/table_header", model: WorkOrder %>
-
-          <tbody class="text-zinc-800 divide-y divide-zinc-200/80 dark:divide-zinc-700">
-
-          <% @all_work_orders.each do |work_order| %>
-                <tr class="md:whitespace-normal whitespace-nowrap">
-                  <td class="align-top md:px-0 p-4 md:whitespace-normal whitespace-nowrap">
-                    <% if work_order.status == "Booked" %>
-                      <span class="text-xs font-medium rounded-full font-sans bg-blue-50 text-blue-600 px-2 py-1 tracking-tight dark:bg-blue-500/20 dark:text-blue-200"><%= work_order.status %></span>
-                    <% elsif work_order.status == "Completed" %>
-                      <span class="text-xs font-medium rounded-full font-sans bg-emerald-50 text-emerald-600  px-2 py-1 tracking-tight dark:bg-emerald-500/20 dark:text-emerald-200"><%= work_order.status %></span>
-                    <% else %>
-                      <span class="text-xs font-medium rounded-full font-sans bg-red-50 text-red-600 px-2 py-1 tracking-tight dark:bg-red-500/20 dark:text-red-200"><%= work_order.status %></span>
-                    <% end %>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                    <p><%= link_to work_order.customer_name, work_order_path(work_order) %></p>
-                    <p><small class="text-zinc-500 dark:text-zinc-400 font-sans"><%= work_order.job_type.titleize %></small></p>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                    <%= work_order.start_date %>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                    <%= work_order.end_date %>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                    <%= work_order.production_job_number %>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-                    <%= work_order.sales_order_number %>
-                  </td>
-                  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
-                    <%= work_order.location %>
-                  </td>
-                  <td class="align-top pt-2 pr-4">
-                    <%= render "table/table_button", work_order: work_order %>
-                  </td>
-                </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+      <%= render "work_order_table", work_orders: @all_work_orders %>
     </div>
-  </div>
 
   <!-- Check the Rails UI design system for other designs and pagy support -->
   <nav aria-label="Page navgiation" class="text-zinc-500 sm:text-sm text-base font-medium dark:text-zinc-300">
@@ -200,6 +71,3 @@
     </ul>
   </nav>
 </div>
-
-<%= render "shared/footer" %>
-

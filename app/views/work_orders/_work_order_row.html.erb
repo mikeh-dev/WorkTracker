@@ -1,0 +1,33 @@
+<tr class="md:whitespace-normal whitespace-nowrap">
+  <td class="align-top md:px-0 p-4 md:whitespace-normal whitespace-nowrap">
+    <% if work_order.status == "Booked" %>
+      <span class="text-xs font-medium rounded-full font-sans bg-blue-50 text-blue-600 px-2 py-1 tracking-tight dark:bg-blue-500/20 dark:text-blue-200"><%= work_order.status %></span>
+    <% elsif work_order.status == "Completed" %>
+      <span class="text-xs font-medium rounded-full font-sans bg-emerald-50 text-emerald-600  px-2 py-1 tracking-tight dark:bg-emerald-500/20 dark:text-emerald-200"><%= work_order.status %></span>
+    <% else %>
+      <span class="text-xs font-medium rounded-full font-sans bg-red-50 text-red-600 px-2 py-1 tracking-tight dark:bg-red-500/20 dark:text-red-200"><%= work_order.status %></span>
+    <% end %>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100">
+    <p><%= link_to work_order.customer_name, work_order_path(work_order) %></p>
+    <p><small class="text-zinc-500 dark:text-zinc-400 font-sans"><%= work_order.job_type.titleize %></small></p>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
+    <%= work_order.start_date.try(:strftime, "%b %d, %Y") %>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
+    <%= work_order.end_date.try(:strftime, "%b %d, %Y") %>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
+    <%= work_order.production_job_number %>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100">
+    <%= work_order.sales_order_number %>
+  </td>
+  <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
+    <%= work_order.location %>
+  </td>
+  <td class="align-top pt-2">
+    <%= render "table/table_button", work_order: work_order %>
+  </td>
+</tr>
