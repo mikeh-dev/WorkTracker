@@ -17,11 +17,9 @@ export default class extends Controller {
   }
 
   connect() {
-    // Get existing dates from hidden fields if they exist
     const startDate = this.startDateTarget.value
     const endDate = this.endDateTarget.value
     
-    // Use existing dates if present, otherwise use default range
     const defaultDates = (startDate && endDate) 
       ? [new Date(startDate), new Date(endDate)]
       : this.rangeValue.map((dateString) => new Date(dateString))
@@ -47,15 +45,13 @@ export default class extends Controller {
     }
 
     const formatDateForField = (date) => {
-      return date.toISOString().split('T')[0] // Returns YYYY-MM-DD
+      return date.toISOString().split('T')[0] 
     }
 
     if (picker.selectedDates.length === 2) {
-      // Update the display label
       const range = picker.selectedDates.map(formatDate).join(" - ")
       this.labelTarget.textContent = range
 
-      // Update the hidden form fields
       this.startDateTarget.value = formatDateForField(picker.selectedDates[0])
       this.endDateTarget.value = formatDateForField(picker.selectedDates[1])
     }
