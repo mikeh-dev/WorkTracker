@@ -10,6 +10,7 @@ class WorkOrdersController < ApplicationController
   end
 
   def new
+    @work_order = WorkOrder.new
   end
 
   def create

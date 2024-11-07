@@ -5,7 +5,7 @@ const currentDate = new Date()
 const oneWeekLater = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000)
 
 export default class extends Controller {
-  static targets = ["label", "input"]
+  static targets = ["label", "startDate", "endDate", "wrapper"]
   static values = {
     mode: String || "",
     minDate: String || "today",
@@ -17,16 +17,21 @@ export default class extends Controller {
   }
 
   connect() {
-    // Parse the rangeValue if passed otherwise fallback to defaults (today + 1.week)
-    // Add to data-controller wrapper data-date-range-picker-range-value='["2023-11-18", "2023-11-25"]' =>
-    this.rangeValue = this.rangeValue.map((dateString) => new Date(dateString))
+    // Get existing dates from hidden fields if they exist
+    const startDate = this.startDateTarget.value
+    const endDate = this.endDateTarget.value
+    
+    // Use existing dates if present, otherwise use default range
+    const defaultDates = (startDate && endDate) 
+      ? [new Date(startDate), new Date(endDate)]
+      : this.rangeValue.map((dateString) => new Date(dateString))
 
     let self = this
-    const picker = flatpickr(this.element, {
+    const picker = flatpickr(this.wrapperTarget, {
       mode: "range",
       minDate: this.minDateValue,
       dateFormat: this.dateFormatValue,
-      defaultDate: this.rangeValue,
+      defaultDate: defaultDates,
       onChange: function (selectedDates, dateStr, instance) {
         self.setCurrentRange(instance)
       },
@@ -41,16 +46,18 @@ export default class extends Controller {
       return date.toLocaleDateString("en-US", options)
     }
 
-    const range = picker.selectedDates.map(formatDate).join(" - ")
-
-    if (this.hasLabelTarget) {
-      this.labelTarget.textContent = range
-
-      // Update formatting to match your data type needs
-      // See: https://flatpickr.js.org/options/
-      this.inputTarget.value = picker.selectedDates
+    const formatDateForField = (date) => {
+      return date.toISOString().split('T')[0] // Returns YYYY-MM-DD
     }
 
-    // Do something with the server to return dates
+    if (picker.selectedDates.length === 2) {
+      // Update the display label
+      const range = picker.selectedDates.map(formatDate).join(" - ")
+      this.labelTarget.textContent = range
+
+      // Update the hidden form fields
+      this.startDateTarget.value = formatDateForField(picker.selectedDates[0])
+      this.endDateTarget.value = formatDateForField(picker.selectedDates[1])
+    }
   }
 }

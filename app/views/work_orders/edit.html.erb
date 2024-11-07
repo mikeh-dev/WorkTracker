@@ -1,2 +1,5 @@
-<h1>WorkOrders#edit</h1>
-<p>Find me in app/views/work_orders/edit.html.erb</p>
+<%= content_for(:title, "Edit Work Order") %>
+
+<div class="max-w-2xl mx-auto px-4 md:py-16 py-6">
+  <%= render "form", work_order: @work_order %>
+</div>
