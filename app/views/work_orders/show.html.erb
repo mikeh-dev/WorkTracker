@@ -1,2 +1,92 @@
-<h1>WorkOrders#show</h1>
-<p>Find me in app/views/work_orders/show.html.erb</p>
+<div class="max-w-4xl mx-auto px-4 md:py-16 py-6">
+  <!-- Breadcrumbs -->
+  <nav class="font-heading text-sm mb-6 text-zinc-700 dark:text-zinc-200">
+    <ul class="flex items-center space-x-3">
+      <li class="after:content-['/'] after:relative after:text-zinc-300 after:left-1 dark:after:text-zinc-500">
+        <%= link_to "Work Orders", work_orders_path, class: "text-primary-600 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-600" %>
+      </li>
+      <li><%= content_for(:title) %></li>
+    </ul>
+  </nav>
+
+  <!-- Main Heading -->
+  <h1 class="mb-6 text-4xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">
+    <%= content_for(:title) %>
+  </h1>
+
+  <!-- Work Order Details -->
+  <div class="bg-white dark:bg-zinc-800 rounded-lg shadow p-6 space-y-6">
+    
+    <!-- Job Information -->
+    <h2 class="text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100">Job Information</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Job Type:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.job_type.titleize %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Location:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.location %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Assigned To:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.assigned_to %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Status:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.status %></p>
+      </div>
+      <div class="col-span-2">
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Production Job Number:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.production_job_number %></p>
+      </div>
+    </div>
+
+    <!-- Customer Information -->
+    <h2 class="text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100">Customer Information</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Customer Name:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.customer_name %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Customer Email:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.customer_email %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Contact Number:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.customer_phone_number %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Sales Order Number:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.sales_order_number %></p>
+      </div>
+    </div>
+
+    <!-- Vehicle Information -->
+    <h2 class="text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100">Vehicle Information</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Registration Number:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.vehicle_registration_number %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Make:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.vehicle_make %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Model:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.vehicle_model %></p>
+      </div>
+      <div>
+        <span class="font-medium text-zinc-700 dark:text-zinc-300">Mileage:</span>
+        <p class="text-zinc-900 dark:text-zinc-100"><%= @work_order.vehicle_mileage %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <div class="mt-8">
+    <%= link_to "Back to Work Orders", work_orders_path, class: "btn btn-white" %>
+  </div>
+</div>
