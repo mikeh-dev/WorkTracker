@@ -46,6 +46,6 @@ class WorkOrdersController < ApplicationController
   end
 
   def work_order_params
-    params.require(:work_order).permit(:customer_name, :customer_phone_number, :start_date, :end_date, :production_job_number, :sales_order_number, :location, :job_type, :status)
+    params.require(:work_order).permit(:vehicle_registration_number, :vehicle_make, :vehicle_model, :vehicle_mileage, :vehicle_damage_notes, :customer_name, :customer_phone_number, :customer_email, :production_job_number, :sales_order_number, :job_type, :job_instructions, :status, :assigned_to, :location, :start_date, :end_date, :job_notes, :extra_parts_used, vehicle_images: [])
   end
 end

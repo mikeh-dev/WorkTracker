@@ -63,6 +63,11 @@
       </div>
     </div>
 
+    <div>
+      <%= form.label :job_instructions, "Job Instructions", class: "form-label" %>
+        <%= form.text_area :job_instructions, class: "form-textarea w-full", placeholder: "Add a note" %>
+    </div>
+
     <h3 class="mb-6 pt-10 text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Customer Information</h3>
 
     <div class="prose prose-zinc mb-6 dark:prose-invert">

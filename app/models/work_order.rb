@@ -1,5 +1,7 @@
 class WorkOrder < ApplicationRecord
   belongs_to :user
+  has_many_attached :vehicle_images
+
 
   enum job_type: {
     repair: 0,
