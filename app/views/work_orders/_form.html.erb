@@ -14,6 +14,55 @@
   <%= render "shared/error_messages", resource: work_order %>
   <%= form_with(model: work_order) do |form| %>
 
+    <h3 class="mb-6 pt-10 text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Job Information</h3>
+
+    <div class="prose prose-zinc mb-6 dark:prose-invert">
+      <p>Enter the job information for the work order.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 form-group">
+      <div>
+        <%= form.label :job_type, "Job Type", class: "form-label" %>
+        <%= form.select :job_type, WorkOrder.job_types.keys.map { |key| [key.titleize, key] }, {}, class: "form-select" %>
+      </div>
+      <div>
+        <%= form.label :location, "Location", class: "form-label" %>
+        <%= form.select :location, ["Liverpool", "Wales", "Billerricay", "Grimsby", "On-Site"], {}, class: "form-select" %>
+      </div>
+      <div>
+        <%= form.label :assigned_to, "Assigned To", class: "form-label" %>
+        <%= form.select :assigned_to, ["Engineer 1", "Engineer 2", "Engineer 3"], {}, class: "form-select" %>
+      </div>
+
+      <div>
+        <%= form.label :status, "Status", class: "form-label" %>
+        <%= form.select :status, ["Booked", "Completed"], {}, class: "form-select" %>
+      </div>
+      <div>
+        <%= form.label :production_job_number, "Production Job Number", class: "form-label" %>
+        <%= form.text_field :production_job_number, class: "form-input w-full", placeholder: "Production Job Number" %>
+      </div>
+
+      <div>
+        <%= form.label :booking_dates, "Booking Dates", class: "form-label form-label-required" %>
+        <a role="button"
+          data-controller="date-range-picker"
+          data-date-range-picker-target="wrapper"
+          class="btn btn-white space-x-3 inline-flex items-center w-full">
+          <%= icon "calendar-days", classes: "w-5 h-5 text-zinc-500 dark:text-zinc-300 flex-shrink-0" %>
+          <span data-date-range-picker-target="label">
+            <% if form.object.start_date.present? && form.object.end_date.present? %>
+              <%= "#{form.object.start_date.strftime('%B %d, %Y')} - #{form.object.end_date.strftime('%B %d, %Y')}" %>
+            <% else %>
+              Select a date range
+            <% end %>
+          </span>
+          <%= form.hidden_field :start_date, data: { date_range_picker_target: "startDate" } %>
+          <%= form.hidden_field :end_date, data: { date_range_picker_target: "endDate" } %>
+        </a>
+      </div>
+    </div>
+
     <h3 class="mb-6 pt-10 text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Customer Information</h3>
 
     <div class="prose prose-zinc mb-6 dark:prose-invert">
@@ -47,49 +96,13 @@
     </div>
 
     <div class="form-group">
-      <%= form.label :booking_dates, "Booking Dates", class: "form-label form-label-required" %>
-      <a role="button"
-        data-controller="date-range-picker"
-        data-date-range-picker-target="wrapper"
-        class="btn btn-white space-x-3 inline-flex items-center">
-        <%= icon "calendar-days", classes: "w-5 h-5 text-zinc-500 dark:text-zinc-300 flex-shrink-0" %>
-        <span data-date-range-picker-target="label">
-          <% if form.object.start_date.present? && form.object.end_date.present? %>
-            <%= "#{form.object.start_date.strftime('%B %d, %Y')} - #{form.object.end_date.strftime('%B %d, %Y')}" %>
-          <% else %>
-            Select a date range
-          <% end %>
-        </span>
-        <%= form.hidden_field :start_date, data: { date_range_picker_target: "startDate" } %>
-        <%= form.hidden_field :end_date, data: { date_range_picker_target: "endDate" } %>
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-      <div>
-        <%= form.label :job_type, "Job Type", class: "form-label" %>
-        <%= form.select :job_type, WorkOrder.job_types.keys.map { |key| [key.titleize, key] }, {}, class: "form-select" %>
-      </div>
-      <div>
-        <%= form.label :location, "Location", class: "form-label" %>
-        <%= form.select :location, ["Liverpool", "Wales", "Billerricay", "Grimsby", "On-Site"], {}, class: "form-select" %>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-      <div>
-        <%= form.label :production_job_number, "Production Job Number", class: "form-label" %>
-        <%= form.text_field :production_job_number, class: "form-input w-full", placeholder: "Production Job Number" %>
-      </div>
-      <div>
-        <%= form.label :status, "Status", class: "form-label" %>
-        <%= form.select :status, ["Booked", "Completed"], {}, class: "form-select" %>
-      </div>
+      <%= form.label :job_notes, "Job Notes", class: "form-label" %>
+      <%= form.text_area :job_notes, class: "form-textarea w-full", placeholder: "Add a note" %>
     </div>
 
     <div class="form-group">
-      <%= form.label :job_notes, "Job Notes", class: "form-label" %>
-      <%= form.text_area :job_notes, class: "form-textarea w-full", placeholder: "Add a note" %>
+      <%= form.label :extra_parts_used, "Extra Parts Used", class: "form-label" %>
+        <%= form.text_area :extra_parts_used, class: "form-textarea w-full", placeholder: "Add a note" %>
     </div>
 
     <h3 class="mb-6 pt-10 text-2xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Vehicle Information</h3>
@@ -98,11 +111,11 @@
       <p>Enter the vehicle information for the customer.</p>
     </div>
 
-    <div class="form-group">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 form-group">
+      <div>
       <%= form.label :vehicle_registration_number, "Vehicle Registration Number", class: "form-label" %>
       <%= form.text_field :vehicle_registration_number, class: "form-input w-full", placeholder: "Vehicle Registration Number" %>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 form-group">
       <div>
         <%= form.label :vehicle_make, "Vehicle Make", class: "form-label" %>
         <%= form.text_field :vehicle_make, class: "form-input w-full", placeholder: "Vehicle Make" %>
@@ -120,6 +133,12 @@
     <div class="form-group">
       <%= form.label :vehicle_damage_notes, "Vehicle Damage Notes", class: "form-label" %>
       <%= form.text_area :vehicle_damage_notes, class: "form-textarea w-full", placeholder: "Vehicle Damage Notes" %>
+    </div>
+
+    <!-- Vehicle images upload -->
+    <div class="form-group">
+      <%= form.label :vehicle_images, "Vehicle Images", class: "form-label" %>
+      <%= form.file_field :vehicle_images, multiple: true, class: "form-file w-full" %>
     </div>
 
     <div class="grid grid-cols-2 gap-6 pt-10">
