@@ -11,36 +11,29 @@
 
     <div class="border-zinc-200 border-b text-zinc-600 dark:text-zinc-100 dark:border-zinc-600">
       <nav role="navigation" class="-mb-px">
-        <% tabs = [
-          { title: 'Upcoming', active: true },
-          { title: 'Complete', active: false },
-          { title: 'All', active: false }
-        ] %>
-        
-        <% tabs.each do |tab| %>
-          <a href="#" 
-             data-tabs-target="tab" 
-             data-action="click->tabs#change"
-             class="py-4 px-4 <%= tab[:active] ? 'border-b border-primary-600' : '' %> inline-block bg-white dark:bg-zinc-900 whitespace-nowrap">
-            <%= tab[:title] %>
-          </a>
-        <% end %>
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 border-b border-primary-600 inline-block bg-white whitespace-nowrap dark:bg-zinc-900">Upcoming</a>
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 bg-white dark:bg-zinc-900 inline-block whitespace-nowrap">Complete</a>
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 bg-white dark:bg-zinc-900 inline-block whitespace-nowrap">All</a>
       </nav>
     </div>
 
-    <% work_order_sections = [
-      { id: 'upcoming-work-orders', collection: @upcoming_work_orders, hidden: false },
-      { id: 'completed-work-orders', collection: @completed_work_orders, hidden: true },
-      { id: nil, collection: @all_work_orders, hidden: true }
-    ] %>
+    <!-- Upcoming Bookings -->
+    <div class="p-4" data-tabs-target="panel" id="upcoming-work-orders">
+      <%= render "work_order_table", work_orders: @upcoming_work_orders %>
+    </div>
 
-    <% work_order_sections.each do |section| %>
-      <div class="p-4 <%= 'hidden' if section[:hidden] %>" 
-           data-tabs-target="panel"
-           <%= "id=#{section[:id]}" if section[:id] %>>
-        <%= render "work_order_table", work_orders: section[:collection] %>
-      </div>
-    <% end %>
+    <!-- Completed Bookings -->
+    <div class="hidden p-4" data-tabs-target="panel" id="completed-work-orders">
+      <%= render "work_order_table", work_orders: @completed_work_orders %>
+    </div>
+
+    <!-- All Bookings -->
+    <div class="hidden p-4" data-tabs-target="panel">
+      <%= render "work_order_table", work_orders: @all_work_orders %>
+    </div>
 
     <%= render "table/pagy_buttons" %>
 </div>

@@ -1,4 +1,4 @@
-<div class="max-w-2xl mx-auto px-4 md:py-16 py-6">
+<div class="max-w-2xl mx-auto px-4 py-6">
   <nav class="font-heading text-sm mb-6 text-zinc-700 dark:text-zinc-200">
     <ul class="flex items-center space-x-3">
       <li class="after:content-['/'] after:relative after:text-zinc-300 after:left-1 dark:after:text-zinc-500">
@@ -84,9 +84,9 @@
         <%= form.text_field :customer_email, class: "form-input w-full", placeholder: "Customer Email" %>
       </div>
        <div>
-        <%= form.label :customer_phone, "Customer Contact Number", class: "form-label" %>
+        <%= form.label :customer_phone_number, "Customer Contact Number", class: "form-label" %>
         <div class="relative">
-          <%= form.text_field :customer_phone, class: "form-input w-full peer pl-14", value: "+1658675309" %>
+          <%= form.text_field :customer_phone_number, class: "form-input w-full peer pl-14", placeholder: "Customer Contact Number" %>
           <span
             class="w-12 h-[40px] bg-white rounded-l-full border-zinc-300/800 flex items-center justify-center absolute left-px top-px border-r peer-focus:border-zinc-500 text-zinc-500 peer-focus:text-primary-600 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-500/80">
             <%= icon "device-phone-mobile", classes: "w-5 h-5" %>
@@ -141,13 +141,32 @@
     </div>
 
     <div class="form-group">
-      <%= form.label :vehicle_images, "Vehicle Images", class: "form-label" %>
-      <%= form.file_field :vehicle_images, multiple: true, class: "form-file w-full" %>
+      <%= form.label :vehicle_images, "Add New Photos", class: "form-label" %>
+      <div class="flex flex-wrap gap-4 mb-4">
+        <% if form.object.vehicle_images.attached? %>
+          <% form.object.vehicle_images.each do |image| %>
+            <%= form.hidden_field :vehicle_images, multiple: true, value: image.signed_id %>
+            <div class="relative group">
+              <%= image_tag image, class: "w-24 h-24 rounded-lg object-cover border-2 border-white shadow-sm dark:border-zinc-700" %>
+              <%= link_to remove_image_work_order_path(form.object, image_id: image.id), 
+                  class: "absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-sm border border-zinc-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:border-red-200 hover:bg-red-50 dark:bg-zinc-800 dark:border-zinc-600 dark:hover:border-red-900 dark:hover:bg-red-900/30",
+                  data: { 
+                    confirm: 'Are you sure?',
+                    turbo_method: :delete,
+                    turbo_confirm: 'Are you sure you want to remove this image?'
+                  } do %>
+                <%= icon "x-mark", classes: "w-4 h-4 text-red-500" %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <%= form.file_field :vehicle_images, multiple: true, class: "form-file", accept: "image/*" %>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
       <%= form.submit "Save", class: "btn btn-secondary w-full" %>
-      <%= form.submit "Save & Back to Work Orders", class: "btn btn-primary w-full" %>
+      <%= form.submit "Save & Back to Work Orders", name: "save_and_back", class: "btn btn-primary w-full" %>
       <%= link_to "Back", work_orders_path, class: "btn btn-white w-full" %>
     </div>
   <% end %>

@@ -32,10 +32,10 @@ class WorkOrdersController < ApplicationController
 
   def update
     if @work_order.update(work_order_params)
-      if params[:commit] == "Save"
-        redirect_to edit_work_order_path(@work_order), notice: "Work order updated successfully"
+      if params[:save_and_back]
+        redirect_to work_orders_path
       else
-        redirect_to work_orders_path, notice: "Work order updated successfully"
+        redirect_to edit_work_order_path(@work_order)
       end
     else
       render :edit, status: :unprocessable_entity
@@ -45,6 +45,12 @@ class WorkOrdersController < ApplicationController
   def destroy
     @work_order.destroy
     redirect_to work_orders_path, notice: "Work order deleted successfully"
+  end
+
+  def remove_image
+    @image = ActiveStorage::Attachment.find(params[:image_id])
+    @image.purge_later
+    redirect_back(fallback_location: request.referer, notice: 'Image was successfully removed.')
   end
 
   private

@@ -14,7 +14,11 @@ Rails.application.routes.draw do
 
   root "work_orders#index"
 
-  resources :work_orders
+  resources :work_orders do
+    member do
+      delete :remove_image
+    end
+  end
 
   devise_for :users
   
