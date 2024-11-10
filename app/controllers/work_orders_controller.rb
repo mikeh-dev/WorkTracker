@@ -17,7 +17,11 @@ class WorkOrdersController < ApplicationController
     @work_order = WorkOrder.new(work_order_params)
     @work_order.user = current_user
     if @work_order.save
-      redirect_to work_order_path(@work_order), notice: "Work order created successfully"
+      if params[:commit] == "Save"
+        redirect_to edit_work_order_path(@work_order), notice: "Work order created successfully"
+      else
+        redirect_to work_orders_path, notice: "Work order created successfully"
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +32,11 @@ class WorkOrdersController < ApplicationController
 
   def update
     if @work_order.update(work_order_params)
-      redirect_to work_order_path(@work_order), notice: "Work order updated successfully"
+      if params[:commit] == "Save"
+        redirect_to edit_work_order_path(@work_order), notice: "Work order updated successfully"
+      else
+        redirect_to work_orders_path, notice: "Work order updated successfully"
+      end
     else
       render :edit, status: :unprocessable_entity
     end

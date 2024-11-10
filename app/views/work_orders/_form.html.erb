@@ -140,15 +140,15 @@
       <%= form.text_area :vehicle_damage_notes, class: "form-textarea w-full", placeholder: "Vehicle Damage Notes" %>
     </div>
 
-    <!-- Vehicle images upload -->
     <div class="form-group">
       <%= form.label :vehicle_images, "Vehicle Images", class: "form-label" %>
       <%= form.file_field :vehicle_images, multiple: true, class: "form-file w-full" %>
     </div>
 
-    <div class="grid grid-cols-2 gap-6 pt-10">
-      <%= link_to "Go Back", (defined?(work_orders_path) ? work_orders_path : "#"), class: "btn btn-white text-center" %>
-      <input type="submit" value="Update Work Order" class="btn btn-primary w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <%= form.submit "Save", class: "btn btn-secondary w-full" %>
+      <%= form.submit "Save & Back to Work Orders", class: "btn btn-primary w-full" %>
+      <%= link_to "Back", work_orders_path, class: "btn btn-white w-full" %>
     </div>
   <% end %>
 </div>

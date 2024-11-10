@@ -9,7 +9,7 @@
     <% end %>
   </td>
   <td class="align-top md:px-0 p-4 dark:text-zinc-100">
-    <p><%= link_to work_order.customer_name, work_order_path(work_order) %></p>
+    <p><%= link_to work_order.customer_name, edit_work_order_path(work_order), class: "hover:text-primary-600 dark:hover:text-primary-500" %></p>
     <p><small class="text-zinc-500 dark:text-zinc-400 font-sans"><%= work_order.job_type.titleize %></small></p>
   </td>
   <td class="align-top md:px-0 p-4 dark:text-zinc-100 font-sans">
@@ -42,7 +42,7 @@
                       data-transition-leave-from="transform opacity-100 scale-100"
                       data-transition-leave-to="transform opacity-0 scale-95" data-dropdown-target="menu">
                       <li>
-                        <%= link_to work_order_path(work_order), class: "px-4 md:py-2 py-3 flex items-center justify-between hover:text-zinc-900 text-zinc-700 dark:text-zinc-200 dark:hover:text-white" do %>
+                        <%= link_to edit_work_order_path(work_order), class: "px-4 md:py-2 py-3 flex items-center justify-between hover:text-zinc-900 text-zinc-700 dark:text-zinc-200 dark:hover:text-white" do %>
                           <span>Go to Work Order</span>
                           <%= icon "chevron-right", classes: "md:hidden block w-5 h-5 text-zinc-500/60 dark:text-zinc-400" %>
         <% end %>             
