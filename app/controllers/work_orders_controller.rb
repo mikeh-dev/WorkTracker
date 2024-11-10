@@ -48,9 +48,13 @@ class WorkOrdersController < ApplicationController
   end
 
   def remove_image
-    @image = ActiveStorage::Attachment.find(params[:image_id])
-    @image.purge_later
-    redirect_back(fallback_location: request.referer, notice: 'Image was successfully removed.')
+    @attachment = @work_order.vehicle_images.find(params[:image_id])
+    @attachment.purge
+    
+    respond_to do |format|
+      format.html { redirect_to edit_work_order_path(@work_order), notice: 'Image was successfully removed.' }
+      format.json { head :no_content }
+    end
   end
 
   private
