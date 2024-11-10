@@ -48,13 +48,8 @@ class WorkOrdersController < ApplicationController
   end
 
   def remove_image
-    @attachment = @work_order.vehicle_images.find(params[:image_id])
-    @attachment.purge
-    
-    respond_to do |format|
-      format.html { redirect_to edit_work_order_path(@work_order), notice: 'Image was successfully removed.' }
-      format.json { head :no_content }
-    end
+    @work_order.remove_image(params[:image_id])
+    redirect_to edit_work_order_path(@work_order), notice: "Image removed successfully"
   end
 
   private

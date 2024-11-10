@@ -2,7 +2,6 @@ class WorkOrder < ApplicationRecord
   belongs_to :user
   has_many_attached :vehicle_images
 
-
   enum job_type: {
     repair: 0,
     installation: 1,
@@ -12,4 +11,7 @@ class WorkOrder < ApplicationRecord
   validates :vehicle_registration_number, length: { maximum: 8 }
   validates :production_job_number, :customer_name, :sales_order_number, :location, :start_date, :end_date, presence: true
 
+  def remove_image(image_id)
+    vehicle_images.find(image_id).purge
+  end
 end
