@@ -17,6 +17,16 @@ This is a simple application (for now) to manage work orders for a vehicle conve
 
 ### Tech Stack
 - Ruby on Rails with Hotwire
-- TailwindCSS
+- TailwindCSS - Shout out to @justalever for RailsUI FrontEnd Starter Kit
 - TDD with RSpec
 - PostgreSQL
+- Devise for Authentication
+
+## New Stuff I've Learnt
+Biggest thing I'm happy with on this one is the Image handling on the Work Order form.
+
+I used a Stimulus controller to handle the image preview after upload and also used a modal controller which came in Rails UI to handle displaying a larger image when needed.
+
+I also wrote a remove image method that will remove the image from the database when the user clicks the remove button in form.
+
+I also used the RailsUI form builder to quickly create a nice looking form.

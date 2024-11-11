@@ -52,11 +52,11 @@
                     data-transition-leave-to="transform opacity-0 scale-95">
 
                     <li>
-                      <%= link_to "Manage Work Orders", (defined?(admin_properties_path) ? admin_properties_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
+                      <%= link_to "Manage Work Orders", work_orders_path, class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
                     </li>
 
                     <li>
-                      <%= link_to "Add Work Order", (defined?(admin_new_booking_path) ? admin_new_booking_path : "#"), class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
+                      <%= link_to "Add Work Order", new_work_order_path, class: "md:py-1 py-2 px-4 hover:text-primary-600 focus:text-primary-600 w-full group text-zinc-600 dark:text-zinc-50 dark:hover:text-zinc-300 block" %>
                     </li>
 
                     <li class="border-b border-zinc-300/80 dark:border-zinc-700/80 my-1.5"></li>
