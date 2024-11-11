@@ -1,0 +1,14 @@
+<%= form.hidden_field :vehicle_images, multiple: true, value: image.signed_id %>
+              <div class="relative group">
+                <%= image_tag image, 
+                    class: "w-24 h-24 rounded-lg object-cover border-2 border-white shadow-sm dark:border-zinc-700 cursor-pointer", 
+                    data: { 
+                      action: "click->modal#open",
+                      full_size_url: url_for(image)
+                    } %>
+                <%= link_to remove_image_work_order_path(form.object, image_id: image.id), 
+                    data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' },
+                    class: "absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity" do %>
+                  <%= icon "trash", classes: "w-4 h-4" %>
+                <% end %>
+              </div>
