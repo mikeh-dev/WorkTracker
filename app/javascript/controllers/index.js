@@ -69,3 +69,6 @@ application.register("tooltip", TooltipController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
+
+import ImagePreviewController from "./image_preview_controller"
+application.register("image-preview", ImagePreviewController)

@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = ["container", "content"]
 
   connect() {
-    console.log("Modal controller connected!")
     useTransition(this, {
       element: this.contentTarget,
     })
