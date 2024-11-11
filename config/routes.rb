@@ -20,6 +20,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :repair_reports do
+    member do
+      delete :remove_image
+      delete :remove_video
+    end
+  end
+
   devise_for :users
   
   get "up" => "rails/health#show", as: :rails_health_check

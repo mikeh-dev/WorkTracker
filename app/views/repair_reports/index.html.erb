@@ -1,0 +1,39 @@
+ <div class="container mx-auto px-4 md:py-16 py-6 md:mb-8">
+  <div class="md:flex items-center justify-between">
+    <h1 class="mb:mb-0 mb-6 text-4xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Work Orders</h1>
+    <div class="md:flex items-center md:space-x-6">
+      <%= link_to "Create Repair Report", new_repair_report_path, class: "btn btn-primary md:mt-0 mt-6" %>
+    </div>
+  </div>
+
+  <div class="my-6 font-heading" data-controller="tabs"
+    data-tabs-active-tab="border-b border-primary-600 inline-block bg-white text-primary-600 dark:bg-zinc-700 dark:text-white dark:border-primary-400 rounded-t">
+
+    <div class="border-zinc-200 border-b text-zinc-600 dark:text-zinc-100 dark:border-zinc-600">
+      <nav role="navigation" class="-mb-px">
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 border-b border-primary-600 inline-block bg-white whitespace-nowrap dark:bg-zinc-900">Upcoming</a>
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 bg-white dark:bg-zinc-900 inline-block whitespace-nowrap">Completed</a>
+        <a href="#" data-tabs-target="tab" data-action="click->tabs#change"
+          class="py-4 px-4 bg-white dark:bg-zinc-900 inline-block whitespace-nowrap">All</a>
+      </nav>
+    </div>
+
+    <!-- Upcoming -->
+    <div class="hidden p-4" data-tabs-target="panel">
+      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    </div>
+
+    <!-- Completed -->
+    <div class="hidden p-4" data-tabs-target="panel">
+      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    </div>
+
+    <!-- All -->
+    <div class="hidden p-4" data-tabs-target="panel">
+      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    </div>
+
+    <%= render "table/pagy_buttons" %>
+</div>
