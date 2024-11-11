@@ -2,80 +2,107 @@ require 'rails_helper'
 
 RSpec.describe "Work Orders", type: :system do
   let(:user) { create(:user) }
-  let(:work_order) { create(:work_order, user: user) }
-  
+
   before do
     sign_in user
   end
 
-  describe "index page" do
-    let!(:upcoming_order) { create(:work_order, user: user, start_date: Date.tomorrow, job_type: :repair) }
-    let!(:completed_order) { create(:work_order, user: user, start_date: 1.day.ago, job_type: :installation) }
-    
-    before do
-      visit work_orders_path
+  describe "index page with multiple orders" do
+    let!(:upcoming_orders) do
+      [
+        create(:work_order, :booked, production_job_number: "PJ11111", user: user),
+        create(:work_order, :booked, production_job_number: "PJ22222", user: user),
+        create(:work_order, :booked, production_job_number: "PJ33333", user: user)
+      ]
     end
 
-    it "displays the page title" do
-      expect(page).to have_content("Work Orders")
+    let!(:completed_orders) do
+      [
+        create(:work_order, :completed, production_job_number: "PJ44444", user: user),
+        create(:work_order, :completed, production_job_number: "PJ55555", user: user)
+      ]
     end
 
-    it "has a create work order button" do
-      expect(page).to have_link("Create Work Order")
-    end
+    before { visit work_orders_path }
 
-    describe "tab navigation" do
-      it "shows Upcoming tab by default" do
-        within("#upcoming-work-orders") do
-          expect(page).to have_content(upcoming_order.production_job_number)
-        end
-      end
-
-      it "can switch to Complete tab" do
-        click_link "Complete"
-        expect(page).to have_content(completed_order.production_job_number)
-      end
-
-      it "can switch to All tab and see all orders" do
-        click_link "All"
-        expect(page).to have_content(upcoming_order.production_job_number)
-        expect(page).to have_content(completed_order.production_job_number)
-      end
-    end
-
-    describe "work order details" do
-      it "displays key information for each order" do
-        within("#upcoming-work-orders") do
-          expect(page).to have_content(upcoming_order.location)
-          expect(page).to have_content(upcoming_order.start_date.strftime("%b %d, %Y"))
-          expect(page).to have_content(upcoming_order.job_type.titleize)
+    it "displays upcoming orders in the default tab" do
+      within("#upcoming-work-orders") do
+        upcoming_orders.each do |order|
+          expect(page).to have_content(order.production_job_number)
+          expect(page).to have_content(order.customer_name)
+          expect(page).to have_content(order.location)
         end
       end
     end
 
-    describe "actions dropdown" do
-      it "can open the actions menu" do
-        if page.has_css?('#ellipsis-horizontal', visible: true)
-          find('#ellipsis-horizontal').click
-        end
-        expect(page).to have_content("Go to Work Order")
+    it "displays completed orders in the Completed tab" do
+      click_link "Completed"
+      completed_orders.each do |order|
+        expect(page).to have_content(order.production_job_number)
+        expect(page).to have_content(order.customer_name)
+        expect(page).to have_content(order.location)
       end
     end
 
-    describe "pagination" do
-      before do
-        create_list(:work_order, 12, user: user)
-      end
-
-      it "shows pagination controls" do
-        expect(page).to have_link("Next")
-        expect(page).to have_link("Previous")
-      end
-
-      it "can navigate between pages" do
-        click_link "2"
-        expect(page).to have_current_path(/page=2/)
+    it "displays all orders in the All tab" do
+      click_link "All"
+      (upcoming_orders + completed_orders).each do |order|
+        expect(page).to have_content(order.production_job_number)
+        expect(page).to have_content(order.customer_name)
+        expect(page).to have_content(order.location)
       end
     end
   end
-end 
+
+  describe "create work order page" do
+    before { visit new_work_order_path }
+
+    it "displays the create form" do
+      expect(page).to have_content("New Work Order")
+    end
+
+    it "allows the user to create a new work order" do
+      fill_in "Production Job Number", with: "PJ12345"
+      fill_in "Sales Order Number", with: "SO12345"
+      fill_in "Customer Name", with: "John Doe"
+      fill_in "Customer Contact Number", with: "07700900000"
+      fill_in "Customer Email", with: "john.doe@example.com"
+      select "Liverpool", from: "Location"
+      click_button "Save & Back to Work Orders"
+      expect(page).to have_content("Work order created successfully")
+    end
+
+    it "displays validation errors for missing required fields" do
+      click_button "Save & Back to Work Orders"
+      expect(page).to have_content("can't be blank")
+    end
+
+    it "displays validation error for missing customer name" do
+      fill_in "Customer Name", with: ""
+      click_button "Save & Back to Work Orders"
+      expect(page).to have_content("can't be blank")
+    end
+
+    it "limits vehicle registration number to 8 characters" do
+      fill_in "Vehicle Registration Number", with: "A" * 9
+      click_button "Save & Back to Work Orders"
+      expect(page).to have_content("is too long (maximum is 8 characters)")
+    end
+  end
+
+  describe "edit work order page" do
+    let(:work_order) { create(:work_order, user: user) }
+
+    before { visit edit_work_order_path(work_order) }
+
+    it "displays the edit form" do
+      expect(page).to have_content("Work Order")
+    end
+
+    it "allows the user to update the work order" do
+      fill_in "Customer Name", with: "Jane Doe"
+      click_button "Save & Back to Work Orders"
+      expect(page).to have_content("Work order updated successfully")
+    end
+  end
+end

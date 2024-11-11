@@ -12,11 +12,10 @@ FactoryBot.define do
     production_job_number { "PJ#{rand(10000..99999)}" }
     sales_order_number { "SO#{rand(10000..99999)}" }
     
-    job_type { :repair }
+    job_type { "repair" }
     job_instructions { "Replace brake pads and check alignment" }
-    status { "pending" }
     assigned_to { "Mike Smith" }
-    location { "Workshop Bay 1" }
+    location { "Liverpool" }
     start_date { Time.current }
     end_date { 3.days.from_now }
     job_notes { "Customer requested evening collection" }
@@ -25,18 +24,26 @@ FactoryBot.define do
     association :user
   end
 
+  trait :booked do
+    status { "Booked" }
+  end
+
+  trait :completed do
+    status { "Completed" }
+  end
+
   trait :repair do
-    job_type { :repair }
+    job_type { "repair" }
     job_instructions { "Replace brake pads and check alignment" }
   end
 
   trait :installation do
-    job_type { :installation }
+    job_type { "installation" }
     job_instructions { "Install new security system" }
   end
 
   trait :floor_protection do
-    job_type { :floor_protection_and_installation }
+    job_type { "floor_protection_and_installation" }
     job_instructions { "Install floor protection in cargo area" }
   end
 end

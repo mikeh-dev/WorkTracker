@@ -33,9 +33,9 @@ class WorkOrdersController < ApplicationController
   def update
     if @work_order.update(work_order_params)
       if params[:save_and_back]
-        redirect_to work_orders_path
+        redirect_to work_orders_path, notice: "Work order updated successfully"
       else
-        redirect_to edit_work_order_path(@work_order)
+        redirect_to edit_work_order_path(@work_order), notice: "Work order updated successfully"
       end
     else
       render :edit, status: :unprocessable_entity

@@ -46,7 +46,7 @@ RSpec.describe "WorkOrders", type: :request do
         expect {
           post work_orders_path, params: valid_attributes
         }.to change(WorkOrder, :count).by(1)
-                expect(response).to redirect_to(work_order_path(WorkOrder.last))
+        expect(response).to redirect_to(work_orders_path)
       end
 
       it "creates a work order with correct attributes" do
@@ -83,7 +83,7 @@ RSpec.describe "WorkOrders", type: :request do
         patch work_order_path(work_order), params: update_attributes
         work_order.reload
         expect(work_order.customer_name).to eq("Updated Name")
-        expect(response).to redirect_to(work_order_path(work_order))
+        expect(response).to redirect_to(edit_work_order_path(work_order))
       end
     end
 

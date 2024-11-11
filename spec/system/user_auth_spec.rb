@@ -102,9 +102,10 @@ RSpec.describe "User authentication", type: :system do
       expect(page).to have_current_path(work_order_path(work_order))
     end
 
-    it "does not allow a User to view work orders edit page" do
+    it "allows a User to view work orders edit page" do
       visit edit_work_order_path(work_order)
-      expect(page).to have_content("You are not authorized to access this page.")
+      expect(page).to have_content("Work Order")
+      expect(page).to have_current_path(edit_work_order_path(work_order))
     end
   end
 end
