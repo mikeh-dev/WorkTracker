@@ -3,16 +3,9 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["input", "previewContainer"];
 
-  connect() {
-    console.log("ImagePreviewController connected");
-  }
-
   preview() {
     const files = this.inputTarget.files;
     const previewContainer = this.previewContainerTarget;
-
-    console.log("Files:", files);
-    console.log("Preview container:", previewContainer);
 
     Array.from(files).forEach(file => {
       const reader = new FileReader();
@@ -31,7 +24,6 @@ export default class extends Controller {
 
         previewWrapper.appendChild(img);
         previewContainer.appendChild(previewWrapper);
-        console.log("Preview appended");
       };
 
       reader.readAsDataURL(file);
