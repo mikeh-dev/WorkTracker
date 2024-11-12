@@ -1,6 +1,6 @@
  <div class="container mx-auto px-4 md:py-16 py-6 md:mb-8">
   <div class="md:flex items-center justify-between">
-    <h1 class="mb:mb-0 mb-6 text-4xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Work Orders</h1>
+    <h1 class="mb:mb-0 mb-6 text-4xl font-semibold font-heading text-zinc-900 dark:text-zinc-100 tracking-tight">Repair Reports</h1>
     <div class="md:flex items-center md:space-x-6">
       <%= link_to "Create Repair Report", new_repair_report_path, class: "btn btn-primary md:mt-0 mt-6" %>
     </div>
@@ -21,18 +21,18 @@
     </div>
 
     <!-- Upcoming -->
-    <div class="hidden p-4" data-tabs-target="panel">
-      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    <div class="p-4" data-tabs-target="panel" id="upcoming-repair-reports">
+      <%= render "repair_report_table", repair_reports: @upcoming_repair_reports %>
     </div>
 
     <!-- Completed -->
-    <div class="hidden p-4" data-tabs-target="panel">
-      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    <div class="hidden p-4" data-tabs-target="panel" id="completed-repair-reports">
+      <%= render "repair_report_table", repair_reports: @completed_repair_reports %>
     </div>
 
     <!-- All -->
-    <div class="hidden p-4" data-tabs-target="panel">
-      <%= render "repair_report_table", repair_reports: @repair_reports %>
+    <div class="hidden p-4" data-tabs-target="panel" id="all-repair-reports">
+      <%= render "repair_report_table", repair_reports: @all_repair_reports %>
     </div>
 
     <%= render "table/pagy_buttons" %>

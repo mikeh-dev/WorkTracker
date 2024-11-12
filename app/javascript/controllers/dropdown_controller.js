@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = ["menu", "trigger"]
 
   connect() {
+    console.log(this.menuTarget)
     useTransition(this, {
       element: this.menuTarget,
     })

@@ -28,6 +28,9 @@ application.register("hello", HelloController)
 import HelpSearchController from "./help_search_controller"
 application.register("help-search", HelpSearchController)
 
+import ImagePreviewController from "./image_preview_controller"
+application.register("image-preview", ImagePreviewController)
+
 import InboxController from "./inbox_controller"
 application.register("inbox", InboxController)
 
@@ -69,6 +72,3 @@ application.register("tooltip", TooltipController)
 
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
-
-import ImagePreviewController from "./image_preview_controller"
-application.register("image-preview", ImagePreviewController)

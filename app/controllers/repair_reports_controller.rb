@@ -2,7 +2,9 @@ class RepairReportsController < ApplicationController
   before_action :set_repair_report, except: [:index, :new, :create]
 
   def index
-    @repair_reports = RepairReport.all
+    @upcoming_repair_reports = RepairReport.where(status: "Booked")
+    @completed_repair_reports = RepairReport.where(status: "Completed")
+    @all_repair_reports = @upcoming_repair_reports + @completed_repair_reports
   end
 
   def new
